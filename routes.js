@@ -50,9 +50,9 @@ router.route('/activities')
 router.route('/card')
 .post(function(req, res){
   let newCard = {
-    // name: req.body.name,
-    // performance: req.body.performance,
-    // date: req.body.date
+    question: req.body.question,
+    answer: req.body.answer,
+    success: req.body.success
   }
   models.Card.create(newCard).then(function(err, card){
     if (err){
@@ -67,10 +67,10 @@ router.route('/card')
 router.route('/card/:id')
 .put(function(req, res){
   models.Card.update({
-    // name: req.body.name
+    success: req.body.success
   }, {
     where: {
-      // id: req.params.id
+      id: req.params.id
     }
   }).then(function(update){
     res.json({message:'Updated Card'});
@@ -84,12 +84,7 @@ router.route('/card/:id')
   models.Card.destroy({
     where: {
       id: req.params.id,
-    }}, {
-      // name: req.body.name,
-      // performance: req.body.performance,
-      // date: req.body.date,
-      // id: req.body.id
-    },
+    }}
   ).then(function(removed){
     res.json({message: 'Deleted card'});
   })

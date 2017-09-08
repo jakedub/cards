@@ -51,6 +51,29 @@ passport.use(new BasicStrategy(
 //   }));
 // })
 
+// models.User.create(
+//   {
+//     name: 'jon',
+//     password: 'this'
+//   }
+// ).then(function(){
+//   return models.User.findAll();
+// }).then(function(name){
+//   console.log(name.map(function(name){
+//     return name.name;
+//   }));
+// })
+//
+// models.Deck.create({
+//   title: 'news'
+// }).then(function(){
+//   return models.Deck.findAll();
+// }).then(function(deck){
+//   console.log(deck.map(function(deck){
+//     return deck.title;
+//   }));
+// })
+
 //Login
 app.get('/login', function(req, res){
   res.render('login')
