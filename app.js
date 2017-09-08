@@ -100,7 +100,7 @@ app.post('/login', function(req, res){
 
 //Home Page. TODO Needs fleshed out
 app.get('/home', function (req,res){
-  res.render('home');
+  res.render('home', {data:data});
 })
 
 
