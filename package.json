@@ -1,0 +1,23 @@
+{
+  "name": "cards",
+  "version": "1.0.0",
+  "description": "initial",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.15.4",
+    "express-session": "^1.15.5",
+    "mustache-express": "^1.2.5",
+    "passport": "^0.4.0",
+    "passport-http": "^0.3.0",
+    "pg": "^7.3.0",
+    "sequelize": "^4.8.2"
+  }
+}
