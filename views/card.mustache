@@ -9,6 +9,16 @@
     <a href='/login'>Log In</a>
     <a href='/logout'>Log Out</a>
     <a href='/register'>Register</a>
+    <form class="card" action="/card" method="post">
+      <label for="question">Question</label>
+      <input type="text" name="question" placeholder="Question" />
+      <label for="answer">Answer</label>
+      <input type="text" name="answer" placeholder="Answer" />
+      <label for="success">Successful?</label>
+      <input type="radio" name="success" value="Success" checked />
+      <input type="radio" name="success" value="Not Successful" />
+      <button type="submit">Create a Flipcard</button>
+    </form>
 
   </body>
 </html>

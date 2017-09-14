@@ -29,11 +29,11 @@ app.use(session({
 app.use(routes);
 
 passport.use(new BasicStrategy(
-  function(username, password, done) {
-      const userPassword = users[username];
+  function(name, password, done) {
+      const userPassword = users[name];
       if (!userPassword) { return done(null, false); }
       if (userPassword !== password) { return done(null, false); }
-      return done(null, username);
+      return done(null, name);
   }
 ));
 
@@ -80,19 +80,22 @@ app.get('/login', function(req, res){
 });
 
 app.post('/login', function(req, res){
-  let username = req.body.username;
+  let name = req.body.name;
   let password = req.body.password;
+  console.log(name);
   models.User.findOne({
     where: {
-      username: username,
+      name: name,
       password: password
     }
   }).then(function(user){
     if (user.password === password){
       req.session.password = password;
-      req.session.userId = user.id;
+      req.session.name = name;
+      console.log("Kicking to home page");
       res.redirect('/home');
     } else {
+      console.log("Kicking back to register page");
       res.redirect('/register');
     }
   })
@@ -100,9 +103,27 @@ app.post('/login', function(req, res){
 
 //Home Page. TODO Needs fleshed out
 app.get('/home', function (req,res){
-  res.render('home', {data:data});
+  res.render('index');
 })
 
+
+// app.get('/home/:id', function(req, res){
+//   models.User.findById(req.params.id).then(function(something){
+//     models.Card.findAll({
+//       where:{
+//         foreignKey: userId
+//       }
+//     })
+//   })
+// })
+
+app.get('/home/:id', function(req, res){
+  models.User.findById(req.params.id).then(function(cards){
+    models.Card.findAll().then(function(card){
+      res.render('index', {data:data});
+    })
+  })
+})
 
 
 //Logging Out
@@ -120,12 +141,13 @@ app.get("/register", function(req,res){
 
 app.post('/register', function(req,res){
   let newUser = {
-    username: req.body.username,
+    name: req.body.name,
     password: req.body.password
   }
   models.User.create(newUser).then(function(user){
-    req.username = user.username;
+    req.name = user.name;
     req.password = user.password;
+    console.log(newUser);
     res.redirect('/login');
   })
 });
