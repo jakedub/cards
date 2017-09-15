@@ -74,6 +74,26 @@ passport.use(new BasicStrategy(
 //   }));
 // })
 
+// models.User.findOne({
+//   where: {
+//     id: 1
+//   }
+// }).then(function(user){
+//   console.log(user.get("id"));
+//   return models.Deck.create({
+//     title: "Random",
+//     userId: user.get("id")
+//   })
+// }).then(function(deck){
+//   console.log(deck.get("id"));
+//   models.Card.create({
+//     question: "What's your favorite color?",
+//     answer: "Blue",
+//     success: true,
+//     deckId: deck.get("id")
+//   });
+// })
+
 //Login
 app.get('/login', function(req, res){
   res.render('login')
@@ -89,11 +109,11 @@ app.post('/login', function(req, res){
       password: password
     }
   }).then(function(user){
-    if (user.password === password){
+    if (user.get("password") === password){
       req.session.password = password;
       req.session.name = name;
       console.log("Kicking to home page");
-      res.redirect('/home');
+      res.redirect(`/home/${user.get("id")}`);
     } else {
       console.log("Kicking back to register page");
       res.redirect('/register');
@@ -102,9 +122,9 @@ app.post('/login', function(req, res){
 })
 
 //Home Page. TODO Needs fleshed out
-app.get('/home', function (req,res){
-  res.render('index');
-})
+// app.get('/home', function (req,res){
+//   res.render('index');
+// })
 
 
 // app.get('/home/:id', function(req, res){
@@ -120,7 +140,7 @@ app.get('/home', function (req,res){
 app.get('/home/:id', function(req, res){
   models.User.findById(req.params.id).then(function(cards){
     models.Card.findAll().then(function(card){
-      res.render('index', {data:data});
+      res.render('index', {data: card});
     })
   })
 })
@@ -169,7 +189,7 @@ app.post('/', function(req, res){
 });
 
 //Delete TODO FIX THIS
-app.post("/home/:id/delete", function (req, res) {
+app.post("/delete/:id/delete", function (req, res) {
   models.Deck.findById(req.params.id).then(function(deck){
     deck.destroy().then(function () {
         res.redirect("/");

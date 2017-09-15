@@ -8,7 +8,7 @@
 <body>
   <a href='/home'>Home</a>
   <a href='/logout'>Log Out</a>
-  <form method="get" action="/view">
+  <form>
     <header>
       <h1>You Should See Your Flipcards</h1>
     </header>
@@ -20,10 +20,8 @@
           {{answer}}
           {{success}}
         </div>
-        <form class="edit" method="post" action="/edit/{{id}}"><button type="submit">Edit</button>
-        </form>
-        <form class="delete" method="post" action="/delete/{{id}}/delete"><button type="submit">Delete</button>
-        </form>
+        <button formaction="/edit/{{id}}" type="submit">Edit</button>
+        <button formaction="/delete/{{id}}" type="submit">Delete</button>
 
       </li>
       {{/data}}

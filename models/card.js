@@ -3,11 +3,12 @@ module.exports = function(sequelize, DataTypes) {
   var Card = sequelize.define('Card', {
     question: DataTypes.STRING,
     answer: DataTypes.STRING,
-    success: DataTypes.BOOLEAN
+    success: DataTypes.BOOLEAN,
+    deckId: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
-        Card.belongsTo(models.Deck, {foreignKey: 'deckId'})
+        Card.belongsTo(models.Deck)
       }
     }
   });
